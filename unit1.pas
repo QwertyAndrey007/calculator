@@ -383,3 +383,81 @@ begin
    Edit1.Text := Stroka;
 end;
 
+procedure TForm1.Button5Click(Sender: TObject);
+begin
+  Stroka += '5';
+   Edit1.Text := Stroka;
+end;
+
+procedure TForm1.Button6Click(Sender: TObject);
+begin
+  Stroka += '6';
+   Edit1.Text := Stroka;
+end;
+
+procedure TForm1.Button7Click(Sender: TObject);
+begin
+  Stroka += '7';
+   Edit1.Text := Stroka;
+end;
+
+procedure TForm1.Button8Click(Sender: TObject);
+begin
+  Stroka += '8';
+   Edit1.Text := Stroka;
+end;
+
+procedure TForm1.Button9Click(Sender: TObject);
+begin
+  Stroka += '9';
+   Edit1.Text := Stroka;
+end;
+
+procedure TForm1.Edit1Change(Sender: TObject);
+var i:integer;
+begin
+   comma := false;
+  Stroka := Edit1.Text;
+  if ((Length(Edit1.Text) > 0) and (ravno))then
+  for i:=1 to Length(Edit1.Text) do
+     begin
+     If ((Ord(Edit1.Text[i]) < 42) or (Ord(Edit1.Text[i]) > 57)) then
+      begin
+        Delete (Stroka, i, 1);
+        ShowMessage('Можно вводить только цифры и знаки действия (+, -, /, *)');
+      end;
+     if (Edit1.Text[i] = ',') or (Edit1.Text[i] = '.') then
+      begin
+       Stroka[i]:= ',';
+        if comma then
+         begin
+        Delete (Stroka, i, 1);
+        ShowMessage('Не может быть две и более запятых в одном числе'); comma := false;
+         end;
+
+     comma := true;
+      end;
+
+     if (Edit1.Text[i] = '+') or (Edit1.Text[i] = '*') or (Edit1.Text[i] = '-') or (Edit1.Text[i] = '/')then
+     begin
+      if (Edit1.Text[i - 1] = '+') or (Edit1.Text[i - 1] = '*') or (Edit1.Text[i - 1] = '-') or (Edit1.Text[i - 1] = '/')then
+      begin
+        ShowMessage('Не может быть два знака подряд');
+        Delete (Stroka, i, 1);
+      end;
+       if (i=1)then
+      begin
+        ShowMessage('Перед знаком должно быть число');
+        Delete (Stroka, i, 1);
+      end;
+      comma := false;
+     end;
+
+      end;
+     Edit1.Text := Stroka;
+     comma := false;
+     ravno := true;
+end;
+
+end.
+
